@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt;
+import math
+import numpy as np
+
 def printChooseVariantMenu():
     print("----------------------------------------")
     print("CHOOSE VARIANT")
@@ -34,9 +38,49 @@ def printChooseStopCondition():
 def getInputFromUser(message):
     return input(message + ": ")
 
-printChooseVariantMenu()
-printChooseFunctionMenu()
-printChooseRangeMenu()
-printChooseStopCondition()
+def calculateValueOfFunction(functionVariant, value):
+    if functionVariant == 1:
+        return (21 * (value ** 3)) + (32 * (value**2)) + (10 * value) +2
+    elif functionVariant == 2:
+        return math.sin(value) - 1/2
+    elif functionVariant == 3:
+        return 2 ** value
+    elif functionVariant == 4:
+        return math.cos(20 * value) + (value ** 3) + 2
+    elif functionVariant == 5:
+        return (2 ** (3 * value)) - (5 * (value ** 3)) - 5
+    else :
+        print("wrong function argument!!!")
+
+def bisectionAlgorithm(a, b, stopValue):
+    i = 0
+    while not isIterationsReached(i, stopValue):
+        midpoint = 0
+        i += 1
+        midpoint = (a + b) / 2
+
+        if i == stopValue :
+            print(midpoint)
+
+        if calculateValueOfFunction(1, a) * calculateValueOfFunction(1, midpoint) < 0:
+            b = midpoint
+        elif calculateValueOfFunction(1, midpoint) * calculateValueOfFunction(1, b) < 0:
+            a = midpoint
+
+def isIterationsReached(i, stopValue):
+    if i < stopValue:
+        return False
+    return True
+def isEpsilonReached(e, eStop):
+    if e < eStop:
+        return True
+    return False
+
+
+bisectionAlgorithm(-10, 10, 20)
+
+
+
+
 
 
