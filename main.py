@@ -2,13 +2,21 @@ import matplotlib.pyplot as plt;
 import math
 import numpy as np
 
+selectedVariant = 0
+selectedFunction = 0
+selectedA = 0
+selectedB = 0
+selectedStopCondition = 0;
+selectedNumberOfIterations = 0;
+selectedEpsilon = 0
+
 def printChooseVariantMenu():
     print("----------------------------------------")
     print("CHOOSE VARIANT")
     print("----------------------------------------")
     print("1. Bisection method")
     print("2. Regula falsi")
-    selectedVariant = getInputFromUser("Variant")
+    return int(getInputFromUser("Variant"))
 
 def printChooseFunctionMenu():
     print("----------------------------------------")
@@ -19,7 +27,7 @@ def printChooseFunctionMenu():
     print("3. 2^x")
     print("4. cos(20x) + x^3 - 1")
     print("5. 2^3x - 5x^3 - 5")
-    selectedFunction = int(getInputFromUser("Function"))
+    return int(getInputFromUser("Function"))
 
 def printChooseRangeMenu():
     print("----------------------------------------")
@@ -27,6 +35,19 @@ def printChooseRangeMenu():
     print("----------------------------------------")
     a = float(getInputFromUser("A"))
     b = float(getInputFromUser("B"))
+    return a, b
+
+def printSetEpsilon():
+    print("----------------------------------------")
+    print("SET EPSILON")
+    print("----------------------------------------")
+    return float(getInputFromUser("Epsilon"))
+
+def printSetNumberOfIterations():
+    print("----------------------------------------")
+    print("SET NUMBER OF ITERATIONS")
+    print("----------------------------------------")
+    return float(getInputFromUser("Number of iterations"))
 
 def printChooseStopCondition():
     print("----------------------------------------")
@@ -34,7 +55,7 @@ def printChooseStopCondition():
     print("----------------------------------------")
     print("1. Precision of results")
     print("2. Number of iterations")
-    selectedStopCondition = int(getInputFromUser("Condition"))
+    return int(getInputFromUser("Condition"))
 def getInputFromUser(message):
     return input(message + ": ")
 
@@ -52,7 +73,7 @@ def calculateValueOfFunction(functionVariant, value):
     else :
         print("wrong function argument!!!")
 
-def bisectionAlgorithm(a, b, stopValue):
+def bisectionAlgorithm(functionNumber, a, b, stopValue):
     i = 0
     while not isIterationsReached(i, stopValue):
         midpoint = 0
@@ -62,9 +83,9 @@ def bisectionAlgorithm(a, b, stopValue):
         if i == stopValue :
             print(midpoint)
 
-        if calculateValueOfFunction(1, a) * calculateValueOfFunction(1, midpoint) < 0:
+        if calculateValueOfFunction(functionNumber, a) * calculateValueOfFunction(functionNumber, midpoint) < 0:
             b = midpoint
-        elif calculateValueOfFunction(1, midpoint) * calculateValueOfFunction(1, b) < 0:
+        elif calculateValueOfFunction(functionNumber, midpoint) * calculateValueOfFunction(functionNumber, b) < 0:
             a = midpoint
 
 def isIterationsReached(i, stopValue):
@@ -77,7 +98,16 @@ def isEpsilonReached(e, eStop):
     return False
 
 
-bisectionAlgorithm(-10, 10, 20)
+selectedVariant = printChooseVariantMenu()
+selectedFunction = printChooseFunctionMenu()
+selectedA, selectedB = printChooseRangeMenu()
+selectedStopCondition = printChooseStopCondition()
+if selectedStopCondition == 1:
+    selectedEpsilon = printSetEpsilon()
+elif selectedStopCondition == 2:
+    selectedNumberOfIterations = printSetNumberOfIterations()
+
+
 
 
 
