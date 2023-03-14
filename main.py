@@ -6,9 +6,8 @@ selectedVariant = 0
 selectedFunction = 0
 selectedA = 0
 selectedB = 0
-selectedStopCondition = 0;
 selectedNumberOfIterations = 0;
-selectedEpsilon = 0
+selectedStopValue = 0
 
 def printChooseVariantMenu():
     print("----------------------------------------")
@@ -73,20 +72,32 @@ def calculateValueOfFunction(functionVariant, value):
     else :
         print("wrong function argument!!!")
 
-def bisectionAlgorithm(functionNumber, a, b, stopValue):
-    i = 0
-    while not isIterationsReached(i, stopValue):
-        midpoint = 0
-        i += 1
-        midpoint = (a + b) / 2
+def bisectionAlgorithm(functionNumber, a, b):
+    midpoint = (a + b) / 2
 
-        if i == stopValue :
-            print(midpoint)
+    if calculateValueOfFunction(functionNumber, a) * calculateValueOfFunction(functionNumber, midpoint) < 0:
+        b = midpoint
+    elif calculateValueOfFunction(functionNumber, midpoint) * calculateValueOfFunction(functionNumber, b) < 0:
+        a = midpoint
 
-        if calculateValueOfFunction(functionNumber, a) * calculateValueOfFunction(functionNumber, midpoint) < 0:
-            b = midpoint
-        elif calculateValueOfFunction(functionNumber, midpoint) * calculateValueOfFunction(functionNumber, b) < 0:
-            a = midpoint
+    return a, b, midpoint
+
+def bisectionAlgorithmController(stopCondition, functionNumber, a, b, stopValue):
+    actualStopValue = 0;
+    xi = 0;
+    if stopCondition == 1:
+        while not isEpsilonReached(actualStopValue, stopValue):
+            actualStopValue += 1
+            a, b, xi = bisectionAlgorithm(functionNumber, a, b)
+            print(actualStopValue)
+            print(xi)
+
+    elif stopCondition == 2:
+        while not isIterationsReached(actualStopValue, stopValue):
+            actualStopValue += 1
+            print(actualStopValue)
+            a, b, xi =  bisectionAlgorithm(functionNumber, a, b)
+            print(xi)
 
 def isIterationsReached(i, stopValue):
     if i < stopValue:
@@ -103,9 +114,11 @@ selectedFunction = printChooseFunctionMenu()
 selectedA, selectedB = printChooseRangeMenu()
 selectedStopCondition = printChooseStopCondition()
 if selectedStopCondition == 1:
-    selectedEpsilon = printSetEpsilon()
+    selectedStopValue = printSetEpsilon()
 elif selectedStopCondition == 2:
-    selectedNumberOfIterations = printSetNumberOfIterations()
+    selectedStopValue = printSetNumberOfIterations()
+
+bisectionAlgorithmController(selectedStopCondition, selectedFunction, selectedA, selectedB, selectedStopValue)
 
 
 
