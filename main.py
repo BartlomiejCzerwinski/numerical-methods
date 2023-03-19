@@ -105,28 +105,51 @@ def drawPlot(functionNumber, a, b, root):
 
     plt.show()
 
-def bisectionAlgorithmController(stopCondition, functionNumber, a, b, stopValue):
+def algorithmController(stopCondition, functionNumber, a, b, stopValue):
+    if calculateValueOfFunction(functionNumber, a) * calculateValueOfFunction(functionNumber, b) > 0:
+        print("There is no zero points on given range")
+        return
+
+    if selectedFunction == 1:
+        fct = bisectionAlgorithm
+    else:
+        fct = regulaFalsiAlgorithm
+
     actualNumberOfIterations = 0;
     plotA = a
     plotB = b
+
     if stopCondition == 1:
-        a, b, xi = bisectionAlgorithm(functionNumber, a, b)
+        a, b, xi = fct(functionNumber, a, b)
         actualNumberOfIterations += 1
+
         while not isEpsilonReached(calculateValueOfFunction(functionNumber, xi), stopValue):
             actualNumberOfIterations += 1
-            a, b, xi = bisectionAlgorithm(functionNumber, a, b)
+            a, b, xi = fct(functionNumber, a, b)
+
         print("Zero: ", xi)
         print("Iterations number: ", actualNumberOfIterations)
         drawPlot(functionNumber, plotA, plotB, xi)
 
     elif stopCondition == 2:
+
         while not isIterationsReached(actualNumberOfIterations, stopValue):
             actualNumberOfIterations += 1
             print(actualNumberOfIterations)
-            a, b, xi =  bisectionAlgorithm(functionNumber, a, b)
+            a, b, xi =  fct(functionNumber, a, b)
+
         print("Zero: ", xi)
         print("Iterations number: ", actualNumberOfIterations)
         drawPlot(functionNumber, plotA, plotB, xi)
+
+def regulaFalsiAlgorithm(functionNumber, a , b):
+        midpoint = ((a * calculateValueOfFunction(functionNumber, b)) - (b * calculateValueOfFunction(functionNumber, a)))/(calculateValueOfFunction(functionNumber, b) - calculateValueOfFunction(functionNumber, a))
+
+        if calculateValueOfFunction(functionNumber, midpoint) * calculateValueOfFunction(functionNumber, a) < 0:
+            b = midpoint
+        else:
+            a = midpoint
+        return a, b, midpoint
 
 def isIterationsReached(i, stopValue):
     if i < stopValue:
@@ -147,5 +170,5 @@ if selectedStopCondition == 1:
 elif selectedStopCondition == 2:
     selectedStopValue = printSetNumberOfIterations()
 
-bisectionAlgorithmController(selectedStopCondition, selectedFunction, selectedA, selectedB, selectedStopValue)
+algorithmController(selectedStopCondition, selectedFunction, selectedA, selectedB, selectedStopValue)
 
