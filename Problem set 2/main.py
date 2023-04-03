@@ -52,15 +52,21 @@ def swapRowsIfDiagonalZero(matrix, vector, startPosition):
                     return matrix, vector
     return matrix, vector
 
+def isZerosRow(matrixRow):
+    for i in matrixRow:
+        if round(i, 10) != 0:
+            return False
+    return True
+
 def isMatrixIndeterminate(matrix, vector):
     for i in range(matrixSize):
-        if round(sum(matrix[i]), 10) == 0 and round(vector[i], 10) == 0:
+        if isZerosRow(matrix[i]) and round(vector[i], 10) == 0:
             return True
     return False
 
 def isMatrixInconsistent(matrix, vector):
     for i in range(matrixSize):
-        if round(sum(matrix[i]), 10) == 0 and round(vector[i], 10) != 0:
+        if isZerosRow(matrix[i]) == 0 and round(vector[i], 10) != 0:
             return True
     return False
 
