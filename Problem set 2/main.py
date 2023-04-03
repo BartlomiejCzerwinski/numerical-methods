@@ -21,7 +21,6 @@ def createVector(dataMatrix):
     return np.array(result)
 
 def divideRow(matrix, vector, rowNumber):
-    matrixSize = len(vector)
     pivot = matrix[rowNumber][rowNumber]
     for i in range(matrixSize):
         matrix[rowNumber][i] /= pivot
@@ -29,7 +28,6 @@ def divideRow(matrix, vector, rowNumber):
     return matrix, vector
 
 def eliminateRow(matrix, vector,  rowNumber):
-    matrixSize = len(vector)
     matrixCopy = np.copy(matrix)
     for i in range(matrixSize):
         for j in range(matrixSize):
@@ -37,7 +35,6 @@ def eliminateRow(matrix, vector,  rowNumber):
                 matrix[i][j] = matrix[i][j] - (matrixCopy[i][rowNumber] * matrix[rowNumber][j])
         if i != rowNumber:
             vector[i] = vector[i] - (matrixCopy[i][rowNumber] * vector[rowNumber])
-
     return matrix, vector
 
 def swapRowsIfDiagonalZero(matrix, vector, startPosition):
@@ -56,14 +53,12 @@ def swapRowsIfDiagonalZero(matrix, vector, startPosition):
     return matrix, vector
 
 def isMatrixIndeterminate(matrix, vector):
-    matrixSize = len(vector)
     for i in range(matrixSize):
         if round(sum(matrix[i]), 10) == 0 and round(vector[i], 10) == 0:
             return True
     return False
 
 def isMatrixInconsistent(matrix, vector):
-    matrixSize = len(vector)
     for i in range(matrixSize):
         if round(sum(matrix[i]), 10) == 0 and round(vector[i], 10) != 0:
             return True
@@ -74,8 +69,7 @@ def printResults(vector):
         print("x" + str(i) + " = " + str(round(vector[i], 10)))
 
 def gaussJordanAlgorithm(matrix, vector):
-    size = len(vector)
-    for i in range(size):
+    for i in range(matrixSize):
         if isMatrixIndeterminate(matrix, vector):
             print("NIEOZNACZONY")
             return
@@ -87,8 +81,8 @@ def gaussJordanAlgorithm(matrix, vector):
         matrix, vector = eliminateRow(matrix, vector, i)
     printResults(vector)
 
-
-t = loadNumbersFromFile("data.txt")
-matrix = createMatrix(t)
-vector = createVector(t)
+data = loadNumbersFromFile("data.txt")
+matrix = createMatrix(data)
+vector = createVector(data)
+matrixSize = len(vector)
 gaussJordanAlgorithm(matrix, vector)
