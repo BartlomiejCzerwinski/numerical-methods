@@ -18,15 +18,6 @@ def printChooseRangeMenu():
     b = float(input("B: "))
     return a, b
 
-def printChooseVariant():
-    print("----------------------------------------")
-    print("CHOOSE VARIANT")
-    print("----------------------------------------")
-    print("1. Load values from file")
-    print("2. Select function")
-    variant = int(input("Variant: "))
-    return variant
-
 def printChooseNodesSelection():
     print("----------------------------------------")
     print("CHOOSE NODES SELECTION")
@@ -45,7 +36,3 @@ def printChooseNumberOfNodes():
     print("----------------------------------------")
     num = int(input("Number of nodes: "))
     return num
-
-def printEnterFilePath():
-    return str(input("File name: "))
-

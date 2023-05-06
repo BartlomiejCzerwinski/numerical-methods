@@ -3,13 +3,6 @@ import matplotlib.pyplot as plt
 import math
 import UserInput as UI
 
-def loadDataFromFile(file_path):
-    row = []
-    with open(file_path, 'r') as f:
-        for line in f:
-            row.append([float(x) for x in line.split()])
-    return row
-
 def calculate_interpolated_values(y, xi, nodes):
     n = len(nodes)
     c = newton_interpolation(nodes, y)
@@ -76,19 +69,8 @@ def plot_interpolation(functionVariant, a, b, n, interpolationType='equidistant'
     plt.legend()
     plt.show()
 
-variant = UI.printChooseVariant()
-
-if variant == 1:
-    fileName = UI.printEnterFilePath()
-    data = loadDataFromFile(fileName)
-    a, b = UI.printChooseRangeMenu()
-    nodesSelection = UI.printChooseNodesSelection()
-    numberOfNodes = UI.printChooseNumberOfNodes()
-    plot_interpolation(data, a, b, numberOfNodes, nodesSelection)
-elif variant == 2:
-    selectedFunction = UI.printChooseFunctionMenu()
-    a, b = UI.printChooseRangeMenu()
-    nodesSelection = UI.printChooseNodesSelection()
-    numberOfNodes = UI.printChooseNumberOfNodes()
-    plot_interpolation(selectedFunction, a, b, numberOfNodes, nodesSelection)
-
+selectedFunction = UI.printChooseFunctionMenu()
+a, b = UI.printChooseRangeMenu()
+nodesSelection = UI.printChooseNodesSelection()
+numberOfNodes = UI.printChooseNumberOfNodes()
+plot_interpolation(selectedFunction, a, b, numberOfNodes, nodesSelection)
