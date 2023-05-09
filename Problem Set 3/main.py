@@ -27,6 +27,10 @@ def calculateValueOfFunction(functionVariant, value):
         return math.sin(value) - (7 * value)
     elif functionVariant == 6:
         return math.sin(value) + horner([1, -1/2, 1/5, -1/2], 4, value)
+    elif functionVariant == 7:
+        return abs(2 * math.cos(2 * value) + 1)
+    elif functionVariant == 8:
+        return 1 / horner([25, 0, 1], 3, value)
     else:
         print("Wrong function argument!!!")
 

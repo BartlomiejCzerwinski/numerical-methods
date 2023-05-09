@@ -8,6 +8,8 @@ def printChooseFunctionMenu():
     print("4. sin(x)")
     print("5. sin(x) - 7x")
     print("6. sin(x) + x^3 - 1/2x^2 + 1/5x - 1/2")
+    print("7. |2cos(2x) + 1|")
+    print("8. 1 / (1 + 25x^2)")
     return int(input("Function: "))
 
 def printChooseRangeMenu():
