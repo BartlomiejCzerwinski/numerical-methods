@@ -5,7 +5,7 @@ from numpy.polynomial.hermite import hermgauss
 
 def calculateValueOfFunction(functionVariant, value):
     if functionVariant == 1:
-        return horner([1,0, 3], 3, value)
+        return np.sin(value)
     elif functionVariant == 2:
         return horner([1, 5, -4, -20], 4, value)
     elif functionVariant == 3:
@@ -37,9 +37,9 @@ def newton_cotes_simpson(a, b, precision, functionVariant, numOfPartitionsPrint=
 
         integral = 0
         for i in range(n//2):
-            integral += (h / 3) * (weight_function(x[2*i])*calculateValueOfFunction(functionVariant, x[2*i])
-                                   + (weight_function(x[2*i+1])*4*calculateValueOfFunction(functionVariant, x[2*i+1]))
-                                   + (weight_function(x[2*i+2])*calculateValueOfFunction(functionVariant, x[2*i+2])))
+            integral += (h / 3) * (calculateValueOfFunction(functionVariant, x[2*i])
+                                   + (4*calculateValueOfFunction(functionVariant, x[2*i+1]))
+                                   + (calculateValueOfFunction(functionVariant, x[2*i+2])))
         if abs(integral - prev_integral) < precision:
             break
 
