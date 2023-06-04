@@ -9,6 +9,20 @@ def printChooseFunctionMenu():
     print("5. cos(2x + 1)")
     return int(input("Function: "))
 
+def printChooseApproximationVariant():
+    print("----------------------------------------")
+    print("CHOOSE RANGE")
+    print("----------------------------------------")
+    print("1. Polynomial degree")
+    print("2. Approximation error")
+    return int(input("Variant: "))
+
+def printChooseApproximationError():
+    print("----------------------------------------")
+    print("ENTER ERROR")
+    print("----------------------------------------")
+    return float(input("Error: "))
+
 def printChooseRangeMenu():
     print("----------------------------------------")
     print("CHOOSE RANGE")

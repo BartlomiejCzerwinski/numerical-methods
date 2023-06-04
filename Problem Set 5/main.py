@@ -13,7 +13,7 @@ def calculateValueOfFunction(functionVariant, value):
     elif functionVariant == 4:
         return np.sin(value)
     elif functionVariant == 5:
-        return 2 * np.cos(2 * (value**2) + 1)
+        return np.cos(2 * (value**2) + 1)
     else:
         print("Wrong function argument!!!")
 
@@ -30,14 +30,26 @@ def calculateError(functionVariant, nodes, result_coefficients):
             horner(result_coefficients, result_coefficients.size, nodes[i])))
     return diff
 
-def gauss_hermite_integration(functionVariant, a, b, degree, n):
+def gauss_hermite_approximation(functionVariant, a, b, degree, n, isByError = False, errorTarget = 1):
+
     x, w = hermgauss(n)
     f_values = calculateValueOfFunction(functionVariant, x)
-
     x_approx = np.linspace(a, b, 100)
     f_approx = calculateValueOfFunction(functionVariant, x_approx)
-    result_coefficients = np.polyfit(x, f_values, degree)
-    p_approx = np.polyval(result_coefficients, x_approx)
+
+    if isByError == False:
+        result_coefficients = np.polyfit(x, f_values, degree)
+        p_approx = np.polyval(result_coefficients, x_approx)
+        error = calculateError(functionVariant, x, result_coefficients)
+    else:
+        errorReached = False;
+        while errorReached == False:
+            result_coefficients = np.polyfit(x, f_values, degree)
+            p_approx = np.polyval(result_coefficients, x_approx)
+            error = calculateError(functionVariant, x, result_coefficients)
+            if error <= errorTarget:
+                errorReached = True
+            degree += 1
 
     plt.plot(x_approx, f_approx, label='Original Function')
     plt.plot(x_approx, p_approx, label='Approximation')
@@ -45,7 +57,6 @@ def gauss_hermite_integration(functionVariant, a, b, degree, n):
     plt.xlabel('x')
     plt.ylabel('f(x)')
     plt.title('Function Approximation')
-    error = calculateError(functionVariant, x, result_coefficients)
     formatted_number = f"{error:.16f}"
     print("Approximation error:", formatted_number)
     np.set_printoptions(precision=4, suppress=True)
@@ -53,9 +64,12 @@ def gauss_hermite_integration(functionVariant, a, b, degree, n):
     plt.show()
 
 function_variant = UI.printChooseFunctionMenu()
+variant = UI.printChooseApproximationVariant()
 a, b = UI.printChooseRangeMenu()
-degree = UI.printChooseEnterPolynomialDegree()
 n = UI.printChooseEnterNumberOfNodesMenu()
-
-gauss_hermite_integration(function_variant, a, b, degree, n)
-
+if variant == 1:
+    degree = UI.printChooseEnterPolynomialDegree()
+    gauss_hermite_approximation(function_variant, a, b, degree, n)
+elif variant == 2:
+    error = UI.printChooseApproximationError()
+    gauss_hermite_approximation(function_variant, a, b, 1, n, True, error)
